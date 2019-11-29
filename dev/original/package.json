@@ -1,0 +1,64 @@
+{
+  "_from": "node-red-node-ui-table@0.1.5",
+  "_id": "node-red-node-ui-table@0.1.5",
+  "_inBundle": false,
+  "_integrity": "sha512-YhkWBxUPupm8/Cozecvipk0at4gS3rq6vV7qpsWlI/GxeW/hqXL+YEW4iIQk9aXK0anZ0KT3fbzgyspWK022hQ==",
+  "_location": "/node-red-node-ui-table",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "node-red-node-ui-table@0.1.5",
+    "name": "node-red-node-ui-table",
+    "escapedName": "node-red-node-ui-table",
+    "rawSpec": "0.1.5",
+    "saveSpec": null,
+    "fetchSpec": "0.1.5"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/node-red-node-ui-table/-/node-red-node-ui-table-0.1.5.tgz",
+  "_shasum": "4ec68d3e672d9893c25022b264d963e5d3c03d4a",
+  "_spec": "node-red-node-ui-table@0.1.5",
+  "_where": "/root/.node-red",
+  "author": {
+    "name": "Kazuhito Yokoi"
+  },
+  "bugs": {
+    "url": "https://github.com/node-red/node-red-ui-nodes/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "Dave Conway-Jones"
+    },
+    {
+      "name": "@hotNipi"
+    }
+  ],
+  "deprecated": false,
+  "description": "Table UI widget node for Node-RED Dashboard",
+  "homepage": "https://github.com/node-red/node-red-ui-nodes/tree/master/node-red-node-ui-table#README.md",
+  "keywords": [
+    "node-red",
+    "node-red-dashboard",
+    "table"
+  ],
+  "license": "Apache-2.0",
+  "name": "node-red-node-ui-table",
+  "node-red": {
+    "nodes": {
+      "ui_table": "node.js"
+    }
+  },
+  "peerDependencies": {
+    "node-red-dashboard": ">2.15.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/node-red/node-red-ui-nodes.git"
+  },
+  "version": "0.1.5"
+}
