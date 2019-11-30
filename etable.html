@@ -14,7 +14,7 @@
   limitations under the License.
 -->
 
-<script type='text/x-red' data-template-name='ui_editable_table'>
+<script type='text/x-red' data-template-name='ui_etable'>
     <div class='form-row' id='template-row-group'>
         <label for='node-input-group'>
             <i class='fa fa-table'></i> <span data-i18n='table.label.group'></span>
@@ -37,19 +37,24 @@
     </div>
 
     <div class="form-row">
-        <label for="node-input-payload"><i class="fa fa-envelope"></i> <span data-i18n="common.label.payload"></span></label>
+        <label for="node-input-options"><i class="fa fa-envelope"></i> <span data-i18n="common.label.options"></span>Options</label>
+        <input type="text" id="node-input-options" style="width:70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-payload"><i class="fa fa-envelope"></i> <span data-i18n="common.label.payload"></span>Columns</label>
         <input type="text" id="node-input-payload" style="width:70%">
         <input type="hidden" id="node-input-payloadType">
     </div>
 </script>
 
 <script type='text/javascript'>
-    RED.nodes.registerType('ui_editable_table', {
+    RED.nodes.registerType('ui_etable', {
         category: 'dashboard',
         color: 'rgb(63, 173, 181)',
         defaults: {
-            payload: {value:"", validate: RED.validators.typedInput("payloadType")},
+            payload: {value:"{}", validate: RED.validators.typedInput("payloadType")},
             payloadType: {value:"json"},
+            options: {value:"{}", validate: RED.validators.typedInput("payloadType")},
 
             group: { type: 'ui_group', required: true },
             name: { value: '' },
@@ -68,15 +73,15 @@
             },
             height: { value: 0 },
             columns: { value: [] },
-            outputs: { value: 0 },
+            outputs: { value: 1 },
             cts: { value: false }
         },
         inputs: 1,
-        outputs: 0,
+        outputs: 1,
         icon: 'font-awesome/fa-table',
-        paletteLabel: 'table',
+        paletteLabel: 'etable',
         label: function () {
-            return this.name || 'table';
+            return this.name || 'etable';
         },
         labelStyle: function() {
             return this.name?"node_label_italic":"";
@@ -93,6 +98,13 @@
             } else if (this.payloadType === 'string' || this.payloadType === 'none') {
                 this.payloadType = "str";
             }
+
+            $("#node-input-options").typedInput({
+                default: 'json',
+                typeField: $("#node-input-payloadType"),
+                types:['flow','global','str','json','env']
+            });
+
             $("#node-input-payloadType").val(this.payloadType);
 
             $("#node-input-payload").typedInput({
@@ -108,9 +120,10 @@
             });
         },
         oneditsave: function() {
-            var that = this;
+/*            var that = this;
             if ($("#node-input-cts").is(":checked")) { that.outputs = 1; }
             else { that.outputs = 0; }
+*/
         },
         oneditresize: function(size) {
         }

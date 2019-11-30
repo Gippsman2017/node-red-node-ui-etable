@@ -28,27 +28,25 @@ module.exports = function (RED) {
     }
 
     function HTML(config,dark) {
-        console.log('PRE=',config);
         var configAsJson = JSON.stringify(config);
-        console.log('POST=',configAsJson);
         var mid = (dark) ? "_midnight" : "";
         var html = String.raw`
-                <link href='ui-editable-table/css/tabulator`+mid+`.min.css' rel='stylesheet' type='text/css'>
-                <script type='text/javascript' src='ui-editable-table/js/tabulator.js'></script>
-                <div id='ui_editable_table-{{$id}}'></div>
+                <link href='ui-etable/css/tabulator`+mid+`.min.css' rel='stylesheet' type='text/css'>
+                <script type='text/javascript' src='ui-etable/js/tabulator.js'></script>
+                <div id='ui_etable-{{$id}}'></div>
                 <input type='hidden' ng-init='init(` + configAsJson + `)'>
             `;
         return html;
     };
 
-    function editableTableNode(config) {
+    function eTableNode(config) {
         var done = null;
         var node = this;
         try {
             RED.nodes.createNode(this, config);
             if (checkConfig(node, config)) {
                 var ui = RED.require('node-red-dashboard')(RED);
-                console.log(config);
+
                 var luma = 255;
                 if (ui.hasOwnProperty("getTheme") && (ui.getTheme() !== undefined)) {
                     var rgb = parseInt(ui.getTheme()["page-sidebar-backgroundColor"].value.substring(1), 16);   // convert rrggbb to decimal
@@ -58,10 +56,11 @@ module.exports = function (RED) {
 
                 config.columns = JSON.parse(config.payload);
                 delete config.payload;
+                delete config.payloadType;
+                config.options = JSON.parse(config.options);
+
                 var html = HTML(config,(luma < 128));
-                console.log('Columns after HTML=',config);
-                console.log('HTML=',html);
-                console.log('Columns=',config);
+
                 done = ui.addWidget({
                     node: node,
                     width: config.width,
@@ -81,37 +80,30 @@ module.exports = function (RED) {
                         $scope.inited = false;
                         $scope.tabledata = [];
                         var tablediv;
-                        var createTable = function(basediv, tabledata, columndata, outputs) {
+                        var createTable = function(basediv, tabledata, columndata, options, outputs) {
                             var y = (columndata.length === 0) ? 25 : 32;
-                            var opts = {
+                            var opts1 = {
                                 data: tabledata,
-                                layout: 'fitColumns',
                                 columns: columndata,
                                 autoColumns: columndata.length == 0,
-                                movableColumns: true,
-                                addRowPos:"bottom",
-                                pagination:"local",
-                                paginationSize:20,
                                 height: tabledata.length * y + 26
                             }
+                            var opts = Object.assign(opts1,options);
                             if (outputs > 0) {
                                 opts.cellClick = function(e, cell) {
-                                    $scope.send({topic:cell.getField(),payload:cell.getData()});
+                                    $scope.send({topic:cell.getField(),payload:cell.getData(),options:opts});
                                 };
                             }
                             var table = new Tabulator(basediv, opts);
-                            $("#add-row").click(function(){table.addRow({});});
-                            $("#del-row").click(function(){table.deleteRow({});});
-                            $("#clear-row").click(function(){table.clearRow({});});
                         };
                         $scope.init = function (config) {
                             $scope.config = config;
-                            tablediv = '#ui_table-' + $scope.$eval('$id')
+                            tablediv = '#ui_etable-' + $scope.$eval('$id')
                             var stateCheck = setInterval(function() {
                                 if (document.querySelector(tablediv) && $scope.tabledata) {
                                     clearInterval(stateCheck);
                                     $scope.inited = true;
-                                    createTable(tablediv,$scope.tabledata,$scope.config.columns,$scope.config.outputs);
+                                    createTable(tablediv,$scope.tabledata,$scope.config.columns,$scope.config.options,$scope.config.outputs);
                                     $scope.tabledata = [];
                                 }
                             }, 40);
@@ -122,8 +114,7 @@ module.exports = function (RED) {
                                     $scope.tabledata = msg.payload;
                                     return;
                                 }
-console.log('MSG=',msg.payload,'\n-',$scope.config.columns);
-                                createTable(tablediv,msg.payload,$scope.config.columns,$scope.config.outputs);
+                                createTable(tablediv,msg.payload,$scope.config.columns,$scope.config.options,$scope.config.outputs);
                             }
                         });
                     }
@@ -137,11 +128,11 @@ console.log('MSG=',msg.payload,'\n-',$scope.config.columns);
         });
     }
 
-    RED.nodes.registerType('ui_editable_table', editableTableNode);
+    RED.nodes.registerType('ui_etable', eTableNode);
 
     var uipath = 'ui';
     if (RED.settings.ui) { uipath = RED.settings.ui.path; }
-    var fullPath = path.join(RED.settings.httpNodeRoot, uipath, '/ui-editable-table/*').replace(/\\/g, '/');;
+    var fullPath = path.join(RED.settings.httpNodeRoot, uipath, '/ui-etable/*').replace(/\\/g, '/');;
     RED.httpNode.get(fullPath, function (req, res) {
         var options = {
             root: __dirname + '/lib/',

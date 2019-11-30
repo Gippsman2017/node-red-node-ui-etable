@@ -9,7 +9,7 @@
     "node-red"
   ],
   "licence": "Apache V2.0",
-  "name": "node-red-contrib-redlink",
+  "name": "node-red-node-ui-etable",
   "node-red": {
     "nodes": {
       "etable": "etable.js"
@@ -19,5 +19,5 @@
     "type": "git",
     "url": "git+https://github.com/Gippsman2017/node-red-node-ui-etable.git"
   },
-  "version": "0.1.0"
+  "version": "0.1.2"
 }

@@ -9,6 +9,18 @@ the Tabulator libraries, it allows very complex editable tables to be built, alt
 
 Eg
 
+Options can be
+
+{
+    "layout": "fitColumns",
+    "movableColumns": true,
+    "addRowPos": "top",
+    "pagination": "local",
+    "paginationSize": 15
+}
+
+Columns can be
+
 [		{title:"Name", field:"name", editor:"input"},
 		{title:"Task Progress", field:"progress", align:"left", formatter:"progress", editor:true},
 		{title:"Gender", field:"gender", width:95, editor:"select", editorParams:{values:["male", "female"]}},
@@ -17,3 +29,4 @@ Eg
 		{title:"Date Of Birth", field:"dob", width:130, sorter:"date", align:"center"},
 		{title:"Driver", field:"car", width:90,  align:"center", formatter:"tickCross", sorter:"boolean", editor:true}
 ]
+
