@@ -1,0 +1,1 @@
+v 0.1.4- allow specifying editor option for select. this should be specified as part of editorParams: editorParams.position = 'top'(default) or 'center'/'middle' or 'bottom'
