@@ -90,8 +90,11 @@ module.exports = function (RED) {
                             }
                             var opts = Object.assign(opts1,options);
                             if (outputs > 0) {
-                                opts.cellClick = function(e, cell) {
-                                    $scope.send({topic:cell.getField(),payload:cell.getData(),options:opts});
+                                opts.cellClick  = function(e,cell) {
+                                    $scope.send({topic:cell.getField(),callback:"cellClick",payload:cell.getData(),options:opts});
+                                };
+                                opts.cellEdited = function(cell) {
+                                    $scope.send({topic:cell.getField(),callback:"cellEdited",payload:cell.getData(),options:opts});
                                 };
                             }
                             var table = new Tabulator(basediv, opts);

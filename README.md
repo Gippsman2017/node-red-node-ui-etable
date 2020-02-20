@@ -30,3 +30,8 @@ Columns can be
 		{title:"Driver", field:"car", width:90,  align:"center", formatter:"tickCross", sorter:"boolean", editor:true}
 ]
 
+CallBacks handled are :
+
+        If the cell has editor = true,  a message is sent with "callback : cellEdited" 
+        If the cell has editor = false, a message is sent with "callback : cellClick"
+
