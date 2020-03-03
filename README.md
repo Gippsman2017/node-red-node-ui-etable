@@ -30,6 +30,15 @@ Columns can be
 		{title:"Driver", field:"car", width:90,  align:"center", formatter:"tickCross", sorter:"boolean", editor:true}
 ]
 
+Pass input data in msg.payload. Note that options and columns can also be passed in via msg. 
+msg = {
+    payload: ...
+    config: {
+        options: ...
+        columns: ...
+    }
+}
+
 CallBacks handled are :
 
         If the cell has editor = true,  a message is sent with "callback : cellEdited" 
