@@ -58,7 +58,6 @@ module.exports = function (RED) {
                 delete config.payload;
                 delete config.payloadType;
                 config.options = JSON.parse(config.options);
-
                 var html = HTML(config,(luma < 128));
 
                 done = ui.addWidget({
@@ -71,7 +70,12 @@ module.exports = function (RED) {
                     group: config.group,
                     forwardInputMessages: false,
                     beforeEmit: function (msg, value) {
-                        return { msg: { payload: value } };
+                        return {
+                            msg: {
+                                payload: value,
+                                config: msg.config
+                            }
+                        };
                     },
                     beforeSend: function (msg, orig) {
                         if (orig) { return orig.msg; }
@@ -112,12 +116,22 @@ module.exports = function (RED) {
                             }, 40);
                         };
                         $scope.$watch('msg', function (msg) {
+                            var columns = $scope.config.columns;
+                            var options = $scope.config.options;
+                            if(msg && msg.hasOwnProperty("config")){
+                                if(msg.config.options){
+                                    options = msg.config.options;
+                                }
+                                if(msg.config.columns){
+                                    columns = msg.config.columns;
+                                }
+                            }
                             if (msg && msg.hasOwnProperty("payload") && Array.isArray(msg.payload)) {
                                 if ($scope.inited == false) {
                                     $scope.tabledata = msg.payload;
                                     return;
                                 }
-                                createTable(tablediv,msg.payload,$scope.config.columns,$scope.config.options,$scope.config.outputs);
+                                createTable(tablediv,msg.payload,columns,options,$scope.config.outputs);
                             }
                         });
                     }
