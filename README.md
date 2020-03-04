@@ -12,11 +12,16 @@ Eg
 Options can be
 
 {
-    "layout": "fitColumns",
     "movableColumns": true,
-    "addRowPos": "top",
+    "resizableColumns": true,
+    "selectable": 5,
+    "responsiveLayout": "collapse",
+    "autoResize": true,
+    "layout": "fitColumns",
     "pagination": "local",
-    "paginationSize": 15
+    "height": "800px",
+    "groupBy": "system",
+    "groupStartOpen": true
 }
 
 Columns can be
