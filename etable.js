@@ -69,6 +69,7 @@ module.exports = function (RED) {
                     order: config.order,
                     group: config.group,
                     forwardInputMessages: false,
+                    emitOnlyNewValues: false,
                     beforeEmit: function (msg, value) {
                         return {
                             msg: {

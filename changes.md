@@ -1,4 +1,6 @@
 
+v 1.0.2	fixed emits not allowing table updates to browser added emitOnlyNewValues: false on widget startup
+
 v.1.0.1 DYNAMIC ETables are now possible.
 	msg.config.options and msg.config.columns are now configurable at runtime, this means that it is now possble to change the displayed tables based on button
 	clicks or editable fields....on the fly !!	
