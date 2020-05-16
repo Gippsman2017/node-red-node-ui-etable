@@ -1,4 +1,5 @@
 
+V 1.0.3 Bump version for npmjs update issue
 v 1.0.2	fixed emits not allowing table updates to browser added emitOnlyNewValues: false on widget startup
 
 v.1.0.1 DYNAMIC ETables are now possible.
